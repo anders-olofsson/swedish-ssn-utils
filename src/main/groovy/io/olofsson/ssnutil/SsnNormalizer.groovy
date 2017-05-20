@@ -16,18 +16,18 @@ class SsnNormalizer {
         result.length() == 12 ? result : addCenturyDigits(result)
     }
 
-    private String removeDashes(String ssn) {
+    private static String removeDashes(String ssn) {
         String result = ssn.replace('-', '')
         result
     }
 
-    private void requireCorrectAmountOfDigits(String ssn) {
+    private static void requireCorrectAmountOfDigits(String ssn) {
         if (!(ssn =~ /(\d{6}|\d{8})-?\d{4}/)) {
             throw new IllegalArgumentException('Invalid SSN format, expected 10 or 12 digits with an optional dash. Got: ' + ssn)
         }
     }
 
-    static addCenturyDigits(String ssn) {
+    private static addCenturyDigits(String ssn) {
         def yearDigits = Integer.parseInt(ssn.substring(0, 2))
         def currentYear = LocalDate.now().getYear() % 100
         yearDigits > currentYear ? '19' + ssn : '20' + ssn
